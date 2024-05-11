@@ -43,37 +43,54 @@
     const todolist = [];
     // kalau mau ada todolist default silahkan di tulis di array di atas.
 
+    // start cleartodolist
     function clearTodolist() {
       const todolistBody = document.getElementById("todolistBody");
       while (todolistBody.firstChild) {
         todolistBody.removeChild(todolistBody.firstChild);
       }
     }
+    // end cleartodolist
 
+    // start addtodolist
+    function addTodolist(todo) {
+      const tr = document.createElement("tr");
+      const tdButton = document.createElement("td");
+      tr.appendChild(tdButton);
+
+      const buttonDone = document.createElement("input");
+      buttonDone.type = "button";
+      buttonDone.value = "Done";
+      tdButton.appendChild(buttonDone);
+
+      const tdTodo = document.createElement("td");
+      tdTodo.textContent = todo;
+      tr.appendChild(tdTodo);
+
+      const todolistBody = document.getElementById("todolistBody");
+      todolistBody.appendChild(tr);
+    }
+    // end addtodolist
+
+    // start menampilkan todolist/ search
     function displayTodolist() {
       clearTodolist();
 
       for (let i = 0; i < todolist.length; i++) {
         const todo = todolist[i];
 
-        const tr = document.createElement("tr");
-        const tdButton = document.createElement("td");
-        tr.appendChild(tdButton);
+        const searchText = document
+          .getElementById("search")
+          .value.toLowerCase();
 
-        const buttonDone = document.createElement("input");
-        buttonDone.type = "button";
-        buttonDone.value = "Done";
-        tdButton.appendChild(buttonDone);
-
-        const tdTodo = document.createElement("td");
-        tdTodo.textContent = todo;
-        tr.appendChild(tdTodo);
-
-        const todolistBody = document.getElementById("todolistBody");
-        todolistBody.appendChild(tr);
+        if (todo.toLowerCase().includes(searchText)) {
+          addTodolist(todo);
+        }
       }
     }
+    // end menampilkan todolist/ sesarch
 
+    // start ketika tombol todo di klik
     document.forms["todoForm"].onsubmit = function (event) {
       event.preventDefault();
 
@@ -84,7 +101,24 @@
       console.info(todolist);
       displayTodolist();
     };
+    // end ketika tombol todo di klik
 
-    // displayTodolist();
+    // start search
+    const searchInput = document.getElementById("search");
+    // ada 3 fungsi seacrh dibawah ini
+    // searchInput.onchange = function () {
+    //   console.info("On Change");
+    // };
+
+    searchInput.onkeyup = function () {
+      displayTodolist();
+    };
+
+    searchInput.onkeydown = function () {
+      displayTodolist();
+    };
+    // end search
+
+    displayTodolist();
   </script>
 </html>
