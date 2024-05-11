@@ -40,7 +40,11 @@
   </body>
 
   <script>
-    const todolist = [];
+    const todolist = [
+      "Belajar JavaScript Dasar",
+      "Belajar JavaScript Object Oriented Programming",
+      "Belajar JavaScript Document Object Model",
+    ];
     // kalau mau ada todolist default silahkan di tulis di array di atas.
 
     // start cleartodolist
@@ -52,8 +56,15 @@
     }
     // end cleartodolist
 
+    // start remove todolist
+    function removeTodolist(index) {
+      todolist.splice(index, 1);
+      displayTodolist();
+    }
+    // end remove todolist
+
     // start addtodolist
-    function addTodolist(todo) {
+    function addTodolist(index, todo) {
       const tr = document.createElement("tr");
       const tdButton = document.createElement("td");
       tr.appendChild(tdButton);
@@ -61,6 +72,9 @@
       const buttonDone = document.createElement("input");
       buttonDone.type = "button";
       buttonDone.value = "Done";
+      buttonDone.onclick = function () {
+        removeTodolist(index);
+      };
       tdButton.appendChild(buttonDone);
 
       const tdTodo = document.createElement("td");
@@ -84,7 +98,7 @@
           .value.toLowerCase();
 
         if (todo.toLowerCase().includes(searchText)) {
-          addTodolist(todo);
+          addTodolist(i, todo);
         }
       }
     }
